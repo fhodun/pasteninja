@@ -7,8 +7,13 @@
     "name": "Filip Hodun",
     "email": "filiphodun@gmail.com"
   },
+  "publisher": "fhodun",
   "engines": {
     "vscode": "^1.60.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fhodun/pasteninja.git"
   },
   "activationEvents": [
     "onCommand:pasteninja.upload"
