@@ -1,14 +1,20 @@
 import * as vscode from "vscode";
 import { window as Window } from "vscode";
-// import { readDocument, uploadToHastebin } from "./utils";
+// // import { readDocument, uploadToHastebin } from "./utils";
 import { uploadToHastebin } from "./utils";
 
-export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "pasteninja" is now active!');
+let myStatusBarItem: vscode.StatusBarItem;
 
-  const disposable = vscode.commands.registerCommand(
-    "pasteninja.upload",
-    async () => {
+export function activate(
+  { subscriptions }: vscode.ExtensionContext
+) {
+  const myCommandId = "pasteninja.upload";
+  subscriptions.push(
+    vscode.commands.registerCommand(myCommandId, async () => {
+      setStatusBar(
+        `Uploading$(more~spin)`
+      );
+
       // const code = readDocument();
       let code;
 
@@ -28,10 +34,30 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage(
         "https://hastebin.com/" + hastebinKey
       );
-    }
+      setStatusBar(hastebinKey);
+    })
   );
 
-  context.subscriptions.push(disposable);
+  myStatusBarItem = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right,
+    100
+  );
+  myStatusBarItem.command = myCommandId;
+
+  subscriptions.push(myStatusBarItem);
+  subscriptions.push(vscode.window.onDidChangeActiveTextEditor(resetStatusBar));
+
+  resetStatusBar();
 }
+
+const resetStatusBar = (): void => {
+  myStatusBarItem.text = `$(cloud-upload) Pasteninja`;
+  myStatusBarItem.show();
+};
+
+const setStatusBar = (text: string): void => {
+  myStatusBarItem.text = text;
+  myStatusBarItem.show();
+};
 
 export function deactivate() {}
