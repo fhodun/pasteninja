@@ -2,7 +2,7 @@
   "name": "pasteninja",
   "displayName": "pasteninja",
   "description": "Upload your code to pastebin like a ninja",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "Filip Hodun",
     "email": "filiphodun@gmail.com"
@@ -16,7 +16,8 @@
     "url": "git://github.com/fhodun/pasteninja.git"
   },
   "activationEvents": [
-    "onCommand:pasteninja.upload"
+    "onCommand:pasteninja.upload",
+    "onCommand:pasteninja.fetch"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -24,6 +25,10 @@
       {
         "command": "pasteninja.upload",
         "title": "PasteNinja: Upload"
+      },
+      {
+        "command": "pasteninja.fetch",
+        "title": "PasteNinja: Fetch"
       }
     ]
   },

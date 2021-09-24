@@ -39,7 +39,26 @@ const uploadToHastebin = async (code: string): Promise<string> => {
     });
 };
 
+const getFromHastebin = async (key: string): Promise<string> => {
+  return axios
+    .get("https://hastebin.com/raw/" + key)
+    .then((r: any) => {
+      if (r.status === 200) {
+        console.log("Successfully got document from hastebin");
+        return r.data;
+      } else {
+        console.error("Getting document failed with status " + r.status);
+        return "Getting document failed with status " + r.status;
+      }
+    })
+    .catch((error: any) => {
+      console.error(error);
+      return "Getting document failed with error: " + error;
+    });
+};
+
 export {
   // readDocument,
   uploadToHastebin,
+  getFromHastebin,
 };
